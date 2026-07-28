@@ -1,0 +1,89 @@
+From 4aed5f54d99f217eef46bec223c2bfddce760f78 Mon Sep 17 00:00:00 2001
+From: Venkata Manikumar P <vpunyama@qti.qualcomm.com>
+Date: Mon, 23 Mar 2026 14:55:45 +0530
+Subject: [PATCH 09/11] smuelee changes for qup & uart2
+
+Change-Id: I9eec6b49d2bd9867a5b3904af4387f88cdf4fc42
+Signed-off-by: Samuel Lee <samuelee@qti.qualcomm.com>
+---
+ qcom/lemans-pinctrl.dtsi  | 27 ++++++++++++++++++++++++++-
+ qcom/lemans-vm-qupv3.dtsi |  6 ++++--
+ 2 files changed, 30 insertions(+), 3 deletions(-)
+
+diff --git a/qcom/lemans-pinctrl.dtsi b/qcom/lemans-pinctrl.dtsi
+index 33c61d001..63415283d 100644
+--- a/qcom/lemans-pinctrl.dtsi
++++ b/qcom/lemans-pinctrl.dtsi
+@@ -942,6 +942,19 @@
+ 				bias-pull-down;
+ 			};
+ 		};
++
++		qupv3_se12_2uart_shutdown: qupv3_se12_2uart_shutdown {
++			mux {
++				pins = "gpio54", "gpio55";
++				function = "gpio";
++			};
++
++			config {
++				pins = "gpio54", "gpio55";
++				drive-strength = <2>;
++				bias-pull-down;
++			};
++		};
+ 	};
+ 
+ 	qupv3_se13_i2c_pins: qupv3_se13_i2c_pins {
+@@ -998,8 +1011,20 @@
+ 				bias-pull-down;
+ 			};
+ 		};
+-	};
+ 
++		qupv3_se13_2uart_shutdown: qupv3_se13_2uart_shutdown {
++			mux {
++				pins = "gpio56", "gpio57";
++				function = "gpio";
++			};
++
++			config {
++				pins = "gpio56", "gpio57";
++				drive-strength = <2>;
++				bias-pull-down;
++			};
++		};
++	};
+ 
+ 	qupv3_se14_i2c_pins: qupv3_se14_i2c_pins {
+ 		qupv3_se14_i2c_active: qupv3_se14_i2c_active {
+diff --git a/qcom/lemans-vm-qupv3.dtsi b/qcom/lemans-vm-qupv3.dtsi
+index 4e9b861f5..3de411be0 100644
+--- a/qcom/lemans-vm-qupv3.dtsi
++++ b/qcom/lemans-vm-qupv3.dtsi
+@@ -202,9 +202,10 @@
+ 			interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
+ 			clock-names = "se-clk";
+ 			clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
+-			pinctrl-names = "default", "sleep";
++			pinctrl-names = "default", "sleep", "shutdown";
+ 			pinctrl-0 = <&qupv3_se12_2uart_active>;
+ 			pinctrl-1 = <&qupv3_se12_2uart_sleep>;
++			pinctrl-2 = <&qupv3_se12_2uart_shutdown>;
+ 			status = "disabled";
+ 		};
+ 
+@@ -215,9 +216,10 @@
+ 			interrupts = <GIC_SPI 835 IRQ_TYPE_LEVEL_HIGH>;
+ 			clock-names = "se-clk";
+ 			clocks = <&gcc GCC_QUPV3_WRAP1_S6_CLK>;
+-			pinctrl-names = "default", "sleep";
++			pinctrl-names = "default", "sleep", "shutdown";
+ 			pinctrl-0 = <&qupv3_se13_2uart_active>;
+ 			pinctrl-1 = <&qupv3_se13_2uart_sleep>;
++			pinctrl-2 = <&qupv3_se13_2uart_shutdown>;
+ 			status = "disabled";
+ 		};
+ 	};
+-- 
+2.34.1
+

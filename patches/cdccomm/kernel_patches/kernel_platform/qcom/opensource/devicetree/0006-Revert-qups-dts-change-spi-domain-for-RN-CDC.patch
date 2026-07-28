@@ -1,0 +1,77 @@
+From afe9b2017c0abf70c3a5cd93318518767d5498ff Mon Sep 17 00:00:00 2001
+From: Samuel Lee <samuelee@qti.qualcomm.com>
+Date: Wed, 19 Jun 2024 20:15:59 -0700
+Subject: [PATCH 06/11] Revert "qups: dts: change spi domain for RN CDC"
+
+This reverts commit 5f7d82bedacbc833a19d845222c13f1f1a44ca63.
+
+Reason for revert: This is for only factory mode, need to revert for normal mode.
+
+Change-Id: If9ebadbca168cd460a99228fd6677b2380fe9ba8
+Signed-off-by: Samuel Lee <samuelee@qti.qualcomm.com>
+---
+ qcom/lemans-vm-la-mt.dtsi |  4 ----
+ qcom/lemans-vm-la.dtsi    |  4 ----
+ qcom/lemans-vm-qupv3.dtsi | 16 ----------------
+ 3 files changed, 24 deletions(-)
+
+diff --git a/qcom/lemans-vm-la-mt.dtsi b/qcom/lemans-vm-la-mt.dtsi
+index 18d67fc1d..cd0cf3a7d 100644
+--- a/qcom/lemans-vm-la-mt.dtsi
++++ b/qcom/lemans-vm-la-mt.dtsi
+@@ -211,10 +211,6 @@
+        status = "ok";
+ };
+ 
+-&qupv3_se18_spi {
+-       status = "ok";
+-};
+-
+ &qupv3_se19_i2c {
+        status = "ok";
+ };
+diff --git a/qcom/lemans-vm-la.dtsi b/qcom/lemans-vm-la.dtsi
+index 87672a647..f6e6add05 100644
+--- a/qcom/lemans-vm-la.dtsi
++++ b/qcom/lemans-vm-la.dtsi
+@@ -224,10 +224,6 @@
+ 	status = "ok";
+ };
+ 
+-&qupv3_se18_spi {
+-	status = "ok";
+-};
+-
+ &qupv3_se19_i2c {
+ 	status = "ok";
+ };
+diff --git a/qcom/lemans-vm-qupv3.dtsi b/qcom/lemans-vm-qupv3.dtsi
+index 820f18021..4e9b861f5 100644
+--- a/qcom/lemans-vm-qupv3.dtsi
++++ b/qcom/lemans-vm-qupv3.dtsi
+@@ -304,22 +304,6 @@
+ 			status = "disabled";
+ 		};
+ 
+-		qupv3_se18_spi: spi@890000 {
+-			compatible = "qcom,spi-geni";
+-			reg = <0x890000 0x4000>;
+-			#address-cells = <1>;
+-			#size-cells = <0>;
+-			reg-names = "se_phys";
+-			interrupts = <GIC_SPI 586 IRQ_TYPE_LEVEL_HIGH>;
+-			clock-names = "se-clk";
+-			clocks = <&gcc GCC_QUPV3_WRAP2_S4_CLK>;
+-			pinctrl-names = "default", "sleep";
+-			pinctrl-0 = <&qupv3_se18_spi_active>;
+-			pinctrl-1 = <&qupv3_se18_spi_sleep>;
+-			spi-max-frequency = <50000000>;
+-			status = "disabled";
+-		};
+-
+ 		qupv3_se19_i2c: i2c@894000 {
+ 			compatible = "qcom,i2c-geni";
+ 			reg = <0x894000 0x4000>;
+-- 
+2.34.1
+

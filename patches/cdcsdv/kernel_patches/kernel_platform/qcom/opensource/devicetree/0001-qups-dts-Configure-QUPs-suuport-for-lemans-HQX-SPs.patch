@@ -1,0 +1,316 @@
+From 3a0745081852a9c9e67167ad7d7694e5f98cbb25 Mon Sep 17 00:00:00 2001
+From: Samuel Lee <samuelee@qti.qualcomm.com>
+Date: Thu, 4 Jan 2024 15:10:00 +0900
+Subject: [PATCH 01/11] qups: dts: Configure QUPs suuport for lemans HQX SPs
+
+Add LAGVM QUP configurations for lemans HQX based SPs.
+
+Change-Id: I4929e1f7e62fc76fa6747eeee522180dc050adf7
+Signed-off-by: Samuel Lee <samuelee@qti.qualcomm.com>
+---
+ qcom/lemans-pinctrl.dtsi  |  57 ++++++++++++++++++++
+ qcom/lemans-vm-la.dtsi    |  40 ++++++++++++++
+ qcom/lemans-vm-qupv3.dtsi | 110 ++++++++++++++++++++++++++++++++++++++
+ qcom/lemans-vm.dtsi       |   5 +-
+ 4 files changed, 211 insertions(+), 1 deletion(-)
+
+diff --git a/qcom/lemans-pinctrl.dtsi b/qcom/lemans-pinctrl.dtsi
+index 9daeec180..33c61d001 100644
+--- a/qcom/lemans-pinctrl.dtsi
++++ b/qcom/lemans-pinctrl.dtsi
+@@ -384,6 +384,34 @@
+ 		};
+ 	};
+ 
++	qupv3_se4_2uart_pins: qupv3_se4_2uart_pins {
++		qupv3_se4_2uart_active: qupv3_se4_2uart_active {
++			mux {
++				pins = "gpio34", "gpio35";
++				function = "qup0_se4";
++			};
++
++			config {
++				pins = "gpio34", "gpio35";
++				drive-strength = <2>;
++				bias-disable;
++			};
++		};
++
++		qupv3_se4_2uart_sleep: qupv3_se4_2uart_sleep {
++			mux {
++				pins = "gpio34", "gpio35";
++				function = "gpio";
++			};
++
++			config {
++				pins = "gpio34", "gpio35";
++				drive-strength = <2>;
++				bias-pull-down;
++			};
++		};
++	};
++
+ 	qupv3_se5_i2c_pins: qupv3_se5_i2c_pins {
+ 		qupv3_se5_i2c_active: qupv3_se5_i2c_active {
+ 			mux {
+@@ -944,6 +972,35 @@
+ 		};
+ 	};
+ 
++	qupv3_se13_2uart_pins: qupv3_se13_2uart_pins {
++		qupv3_se13_2uart_active: qupv3_se13_2uart_active {
++			mux {
++				pins = "gpio56", "gpio57";
++				function = "qup1_se6";
++			};
++
++			config {
++				pins = "gpio56", "gpio57";
++				drive-strength = <2>;
++				bias-disable;
++			};
++		};
++
++		qupv3_se13_2uart_sleep: qupv3_se13_2uart_sleep {
++			mux {
++				pins = "gpio56", "gpio57";
++				function = "gpio";
++			};
++
++			config {
++				pins = "gpio56", "gpio57";
++				drive-strength = <2>;
++				bias-pull-down;
++			};
++		};
++	};
++
++
+ 	qupv3_se14_i2c_pins: qupv3_se14_i2c_pins {
+ 		qupv3_se14_i2c_active: qupv3_se14_i2c_active {
+ 			mux {
+diff --git a/qcom/lemans-vm-la.dtsi b/qcom/lemans-vm-la.dtsi
+index 16b14f4f2..c6e884d0e 100644
+--- a/qcom/lemans-vm-la.dtsi
++++ b/qcom/lemans-vm-la.dtsi
+@@ -196,6 +196,46 @@
+ 	status = "ok";
+ };
+ 
++&qupv3_se0_i2c {
++	status = "ok";
++};
++
++&qupv3_se3_spi {
++	status = "ok";
++};
++
++&qupv3_se4_2uart {
++	status = "ok";
++};
++
++&qupv3_se7_i2c {
++	status = "ok";
++};
++
++&qupv3_se8_i2c {
++	status = "ok";
++};
++
++&qupv3_se9_2uart {
++	status = "ok";
++};
++
++&qupv3_se12_2uart {
++	status = "ok";
++};
++
++&qupv3_se13_2uart {
++	status = "ok";
++};
++
++&qupv3_se15_i2c {
++	status = "ok";
++};
++
++&qupv3_se19_i2c {
++	status = "ok";
++};
++
+ &soc {
+ 	google,debug-kinfo {
+ 		compatible = "google,debug-kinfo";
+diff --git a/qcom/lemans-vm-qupv3.dtsi b/qcom/lemans-vm-qupv3.dtsi
+index 3f6378fd0..25064d292 100644
+--- a/qcom/lemans-vm-qupv3.dtsi
++++ b/qcom/lemans-vm-qupv3.dtsi
+@@ -93,6 +93,21 @@
+ 			qcom,wakeup-byte = <0xFD>;
+ 			status = "disabled";
+ 		};
++
++		qupv3_se4_2uart: qcom,qup_uart@990000 {
++			compatible = "qcom,msm-geni-serial-hs";
++			reg = <0x990000 0x4000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg-names = "se_phys";
++			interrupts = <GIC_SPI 531 IRQ_TYPE_LEVEL_HIGH>;
++			clock-names = "se-clk";
++			clocks = <&gcc GCC_QUPV3_WRAP0_S4_CLK>;
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&qupv3_se4_2uart_active>;
++			pinctrl-1 = <&qupv3_se4_2uart_sleep>;
++			status = "disabled";
++		};
+ 	};
+ 
+ 	/* QUPv3_1  wrapper  instance */
+@@ -111,6 +126,47 @@
+ 		qcom,iommu-dma = "fastmap";
+ 		status = "disabled";
+ 
++		qupv3_se7_i2c: i2c@a80000 {
++			compatible = "qcom,i2c-geni";
++			reg = <0xa80000 0x4000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 353 IRQ_TYPE_LEVEL_HIGH>;
++			clock-names = "se-clk";
++			clocks = <&gcc GCC_QUPV3_WRAP1_S0_CLK>;
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&qupv3_se7_i2c_active>;
++			pinctrl-1 = <&qupv3_se7_i2c_sleep>;
++			status = "disabled";
++		};
++
++		qupv3_se8_i2c: i2c@a84000 {
++			compatible = "qcom,i2c-geni";
++			reg = <0xa84000 0x4000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 354 IRQ_TYPE_LEVEL_HIGH>;
++			clock-names = "se-clk";
++			clocks = <&gcc GCC_QUPV3_WRAP1_S1_CLK>;
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&qupv3_se8_i2c_active>;
++			pinctrl-1 = <&qupv3_se8_i2c_sleep>;
++			status = "disabled";
++		};
++
++		qupv3_se9_2uart: qcom,qup_uart@a88000 {
++			compatible = "qcom,geni-debug-uart";
++			reg = <0xa88000 0x4000>;
++			reg-names = "se_phys";
++			interrupts = <GIC_SPI 355 IRQ_TYPE_LEVEL_HIGH>;
++			clock-names = "se";
++			clocks = <&gcc GCC_QUPV3_WRAP1_S2_CLK>;
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&qupv3_se9_2uart_active>;
++			pinctrl-1 = <&qupv3_se9_2uart_sleep>;
++			status = "disabled";
++		};
++
+ 		qupv3_se11_i2c: i2c@a90000 {
+ 			compatible = "qcom,i2c-geni";
+ 			reg = <0xa90000 0x4000>;
+@@ -138,6 +194,32 @@
+ 			pinctrl-1 = <&qupv3_se10_2uart_sleep>;
+ 			status = "disabled";
+ 		};
++
++		qupv3_se12_2uart: qcom,qup_uart@a94000 {
++			compatible = "qcom,msm-geni-serial-hs";
++			reg = <0xa94000 0x4000>;
++			reg-names = "se_phys";
++			interrupts = <GIC_SPI 358 IRQ_TYPE_LEVEL_HIGH>;
++			clock-names = "se-clk";
++			clocks = <&gcc GCC_QUPV3_WRAP1_S5_CLK>;
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&qupv3_se12_2uart_active>;
++			pinctrl-1 = <&qupv3_se12_2uart_sleep>;
++			status = "disabled";
++		};
++
++		qupv3_se13_2uart: qcom,qup_uart@a98000 {
++			compatible = "qcom,msm-geni-serial-hs";
++			reg = <0xa98000 0x4000>;
++			reg-names = "se_phys";
++			interrupts = <GIC_SPI 835 IRQ_TYPE_LEVEL_HIGH>;
++			clock-names = "se-clk";
++			clocks = <&gcc GCC_QUPV3_WRAP1_S6_CLK>;
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&qupv3_se13_2uart_active>;
++			pinctrl-1 = <&qupv3_se13_2uart_sleep>;
++			status = "disabled";
++		};
+ 	};
+ 
+ 	/* QUPv3_2  wrapper  instance */
+@@ -172,6 +254,20 @@
+ 			status = "disabled";
+ 		};
+ 
++		qupv3_se15_i2c: i2c@884000 {
++			compatible = "qcom,i2c-geni";
++			reg = <0x884000 0x4000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 583 IRQ_TYPE_LEVEL_HIGH>;
++			clock-names = "se-clk";
++			clocks = <&gcc GCC_QUPV3_WRAP2_S1_CLK>;
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&qupv3_se15_i2c_active>;
++			pinctrl-1 = <&qupv3_se15_i2c_sleep>;
++			status = "disabled";
++		};
++
+ 		/* BT UART Instance */
+ 		qupv3_se17_4uart: qcom,qup_uart@88c000 {
+ 			compatible = "qcom,msm-geni-serial-hs";
+@@ -193,5 +289,19 @@
+ 			qcom,wakeup-byte = <0xFD>;
+ 			status = "disabled";
+ 		};
++
++		qupv3_se19_i2c: i2c@894000 {
++			compatible = "qcom,i2c-geni";
++			reg = <0x894000 0x4000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 587 IRQ_TYPE_LEVEL_HIGH>;
++			clock-names = "se-clk";
++			clocks = <&gcc GCC_QUPV3_WRAP2_S5_CLK>;
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&qupv3_se19_i2c_active>;
++			pinctrl-1 = <&qupv3_se19_i2c_sleep>;
++			status = "disabled";
++		};
+ 	};
+ };
+diff --git a/qcom/lemans-vm.dtsi b/qcom/lemans-vm.dtsi
+index 6513566df..5d3cfae6a 100644
+--- a/qcom/lemans-vm.dtsi
++++ b/qcom/lemans-vm.dtsi
+@@ -666,14 +666,17 @@
+ 
+ &qupv3_0 {
+ 	qcom,iommu-dma = "bypass";
++	status = "ok";
+ };
+ 
+ &qupv3_1 {
+ 	qcom,iommu-dma = "bypass";
++	status = "ok";
+ };
+ 
+ &qupv3_2 {
+-	 qcom,iommu-dma = "bypass";
++	qcom,iommu-dma = "bypass";
++	status = "ok";
+ };
+ 
+ &hab {
+-- 
+2.34.1
+
