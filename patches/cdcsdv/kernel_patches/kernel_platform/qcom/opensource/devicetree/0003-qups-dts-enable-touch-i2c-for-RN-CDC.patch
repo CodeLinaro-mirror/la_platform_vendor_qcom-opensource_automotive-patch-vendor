@@ -1,0 +1,73 @@
+From 4312216e03decc86033202e3bbccdd4e75942967 Mon Sep 17 00:00:00 2001
+From: Samuel Lee <samuelee@qti.qualcomm.com>
+Date: Fri, 19 Apr 2024 15:43:36 +0900
+Subject: [PATCH 03/11] qups: dts: enable touch i2c for RN CDC
+
+Enable touch i2c for lemans HQX based SPs (RN CDC).
+
+Change-Id: I7b2168f25bf5920baa55e3a9d5c98f9049bf395c
+Signed-off-by: Samuel Lee <samuelee@qti.qualcomm.com>
+---
+ qcom/lemans-vm-la-mt.dtsi |  4 ++++
+ qcom/lemans-vm-la.dtsi    |  4 ++++
+ qcom/lemans-vm-qupv3.dtsi | 14 ++++++++++++++
+ 3 files changed, 22 insertions(+)
+
+diff --git a/qcom/lemans-vm-la-mt.dtsi b/qcom/lemans-vm-la-mt.dtsi
+index f0d9c8084..cd0cf3a7d 100644
+--- a/qcom/lemans-vm-la-mt.dtsi
++++ b/qcom/lemans-vm-la-mt.dtsi
+@@ -203,6 +203,10 @@
+        status = "ok";
+ };
+ 
++&qupv3_se14_i2c {
++       status = "ok";
++};
++
+ &qupv3_se15_i2c {
+        status = "ok";
+ };
+diff --git a/qcom/lemans-vm-la.dtsi b/qcom/lemans-vm-la.dtsi
+index c6e884d0e..cd63edd26 100644
+--- a/qcom/lemans-vm-la.dtsi
++++ b/qcom/lemans-vm-la.dtsi
+@@ -228,6 +228,10 @@
+ 	status = "ok";
+ };
+ 
++&qupv3_se14_i2c {
++	status = "ok";
++};
++
+ &qupv3_se15_i2c {
+ 	status = "ok";
+ };
+diff --git a/qcom/lemans-vm-qupv3.dtsi b/qcom/lemans-vm-qupv3.dtsi
+index 25064d292..4e9b861f5 100644
+--- a/qcom/lemans-vm-qupv3.dtsi
++++ b/qcom/lemans-vm-qupv3.dtsi
+@@ -254,6 +254,20 @@
+ 			status = "disabled";
+ 		};
+ 
++		qupv3_se14_i2c: i2c@880000 {
++			compatible = "qcom,i2c-geni";
++			reg = <0x880000 0x4000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			interrupts = <GIC_SPI 373 IRQ_TYPE_LEVEL_HIGH>;
++			clock-names = "se-clk";
++			clocks = <&gcc GCC_QUPV3_WRAP2_S0_CLK>;
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&qupv3_se14_i2c_active>;
++			pinctrl-1 = <&qupv3_se14_i2c_sleep>;
++			status = "disabled";
++		};
++
+ 		qupv3_se15_i2c: i2c@884000 {
+ 			compatible = "qcom,i2c-geni";
+ 			reg = <0x884000 0x4000>;
+-- 
+2.34.1
+

@@ -1,0 +1,33 @@
+From a09751516cbfc2cf7d4f8e27153281ae34df2bc7 Mon Sep 17 00:00:00 2001
+From: Rahul Parmar <rahuparm@qti.qualcomm.com>
+Date: Mon, 25 May 2026 23:11:33 -0700
+Subject: [PATCH 11/11] ARM: dts: msm: Add pstore ramoops area for lemans FVM
+
+Change-Id: I4172b12d44facbbc3b90bbf34e2f67543b46e20b
+Signed-off-by: Rahul Parmar <rahuparm@qti.qualcomm.com>
+---
+ qcom/lemans-vm-la-mt.dtsi | 8 ++++++++
+ 1 file changed, 8 insertions(+)
+
+diff --git a/qcom/lemans-vm-la-mt.dtsi b/qcom/lemans-vm-la-mt.dtsi
+index fd64e595c..9fd5fe500 100644
+--- a/qcom/lemans-vm-la-mt.dtsi
++++ b/qcom/lemans-vm-la-mt.dtsi
+@@ -358,6 +358,14 @@
+ 		no-map;
+ 		reg = <0x0 0x00000000 0x0 0x00000000>;
+ 	};
++        	ramoops@12345000 {
++		compatible = "ramoops";
++		reg = <0x00 0x00 0x00 0x00>;
++		no-map;
++		record-size = <0x4000>;
++		console-size = <0x4000>;
++		phandle = <0x147>;
++	};
+ };
+ 
+ &soc {
+-- 
+2.34.1
+

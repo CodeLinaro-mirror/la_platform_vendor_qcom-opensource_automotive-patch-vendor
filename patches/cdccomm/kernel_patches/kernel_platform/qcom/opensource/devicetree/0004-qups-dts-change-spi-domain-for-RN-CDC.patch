@@ -1,0 +1,76 @@
+From dcbcfe81dad90b211aa155681cc76904e9974196 Mon Sep 17 00:00:00 2001
+From: Samuel Lee <samuelee@qti.qualcomm.com>
+Date: Mon, 13 May 2024 12:00:17 +0900
+Subject: [PATCH 04/11] qups: dts: change spi domain for RN CDC
+
+for RN_CDC,
+Change QUP2_SE4 spi domain from QNX to LAGVM (FVM).
+
+Change-Id: Ifcaea1e17705e561eba92376b595762bdd7fc615
+Signed-off-by: Samuel Lee <samuelee@qti.qualcomm.com>
+---
+ qcom/lemans-vm-la-mt.dtsi |  4 ++++
+ qcom/lemans-vm-la.dtsi    |  4 ++++
+ qcom/lemans-vm-qupv3.dtsi | 16 ++++++++++++++++
+ 3 files changed, 24 insertions(+)
+
+diff --git a/qcom/lemans-vm-la-mt.dtsi b/qcom/lemans-vm-la-mt.dtsi
+index cd0cf3a7d..18d67fc1d 100644
+--- a/qcom/lemans-vm-la-mt.dtsi
++++ b/qcom/lemans-vm-la-mt.dtsi
+@@ -211,6 +211,10 @@
+        status = "ok";
+ };
+ 
++&qupv3_se18_spi {
++       status = "ok";
++};
++
+ &qupv3_se19_i2c {
+        status = "ok";
+ };
+diff --git a/qcom/lemans-vm-la.dtsi b/qcom/lemans-vm-la.dtsi
+index cd63edd26..61cbf0f7f 100644
+--- a/qcom/lemans-vm-la.dtsi
++++ b/qcom/lemans-vm-la.dtsi
+@@ -236,6 +236,10 @@
+ 	status = "ok";
+ };
+ 
++&qupv3_se18_spi {
++	status = "ok";
++};
++
+ &qupv3_se19_i2c {
+ 	status = "ok";
+ };
+diff --git a/qcom/lemans-vm-qupv3.dtsi b/qcom/lemans-vm-qupv3.dtsi
+index 4e9b861f5..820f18021 100644
+--- a/qcom/lemans-vm-qupv3.dtsi
++++ b/qcom/lemans-vm-qupv3.dtsi
+@@ -304,6 +304,22 @@
+ 			status = "disabled";
+ 		};
+ 
++		qupv3_se18_spi: spi@890000 {
++			compatible = "qcom,spi-geni";
++			reg = <0x890000 0x4000>;
++			#address-cells = <1>;
++			#size-cells = <0>;
++			reg-names = "se_phys";
++			interrupts = <GIC_SPI 586 IRQ_TYPE_LEVEL_HIGH>;
++			clock-names = "se-clk";
++			clocks = <&gcc GCC_QUPV3_WRAP2_S4_CLK>;
++			pinctrl-names = "default", "sleep";
++			pinctrl-0 = <&qupv3_se18_spi_active>;
++			pinctrl-1 = <&qupv3_se18_spi_sleep>;
++			spi-max-frequency = <50000000>;
++			status = "disabled";
++		};
++
+ 		qupv3_se19_i2c: i2c@894000 {
+ 			compatible = "qcom,i2c-geni";
+ 			reg = <0x894000 0x4000>;
+-- 
+2.34.1
+

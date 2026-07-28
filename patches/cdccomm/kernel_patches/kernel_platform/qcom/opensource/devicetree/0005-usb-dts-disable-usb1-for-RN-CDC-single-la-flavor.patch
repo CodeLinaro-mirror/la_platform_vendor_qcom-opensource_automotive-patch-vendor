@@ -1,0 +1,42 @@
+From 162f06911910e2b4c7e34b62cd9eafd7c3fe4749 Mon Sep 17 00:00:00 2001
+From: Samuel Lee <samuelee@qti.qualcomm.com>
+Date: Wed, 5 Jun 2024 13:54:19 +0900
+Subject: [PATCH 05/11] usb: dts: disable usb1 for RN CDC single la flavor
+
+FVM does not use usb1 on RN CDC project,
+disable usb1 to avoid dynamic xhci assignment.
+
+https://jira.dt.renault.com/browse/SDVCCS-15098
+
+Change-Id: Ia7462c6b2f353ee01bd0b119e930f29f83cd8153
+Signed-off-by: Samuel Lee <samuelee@qti.qualcomm.com>
+---
+ qcom/lemans-vm-la.dtsi | 12 ------------
+ 1 file changed, 12 deletions(-)
+
+diff --git a/qcom/lemans-vm-la.dtsi b/qcom/lemans-vm-la.dtsi
+index 61cbf0f7f..87672a647 100644
+--- a/qcom/lemans-vm-la.dtsi
++++ b/qcom/lemans-vm-la.dtsi
+@@ -152,18 +152,6 @@
+ 	status = "ok";
+ };
+ 
+-&usb1 {
+-	status = "ok";
+-};
+-
+-&usb2_phy1 {
+-	status = "ok";
+-};
+-
+-&usb_qmp_phy1 {
+-	status = "ok";
+-};
+-
+ &usb2 {
+ 	status = "ok";
+ };
+-- 
+2.34.1
+
