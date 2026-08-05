@@ -1,7 +1,7 @@
-From 3cafb325abe86e023a46a89ad1d2db6a20c0e586 Mon Sep 17 00:00:00 2001
+From 496c296aa2125837dd9f755cbe426e1e77074432 Mon Sep 17 00:00:00 2001
 From: meixie <meixie@qti.qualcomm.com>
 Date: Thu, 23 Jan 2025 16:46:38 +0800
-Subject: [PATCH 08/11] ARM: dts: msm: Enable emac pass thru
+Subject: [PATCH] ARM: dts: msm: Enable emac pass thru
 
 Define eth driver device tree:
 lemans-vm-la-mt.dtsi is used for emac1 pass thru to LA GVM.
@@ -10,14 +10,14 @@ Change-Id: I898c5847aca2330d4dac7a07ccea5b26fb804487
 Signed-off-by: meixie <quic_meixie@quicinc.com>
 Signed-off-by: Samuel Lee <samuelee@qti.qualcomm.com>
 ---
- qcom/lemans-vm-la-mt.dtsi | 109 ++++++++++++++++++++++++++++++++++++++
- 1 file changed, 109 insertions(+)
+ qcom/lemans-vm-la-mt.dtsi | 115 ++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 115 insertions(+)
 
 diff --git a/qcom/lemans-vm-la-mt.dtsi b/qcom/lemans-vm-la-mt.dtsi
-index 7b5eb19dc..fcf761fb3 100644
+index a0c4e73d..c1024cdd 100644
 --- a/qcom/lemans-vm-la-mt.dtsi
 +++ b/qcom/lemans-vm-la-mt.dtsi
-@@ -89,6 +89,115 @@
+@@ -89,6 +89,121 @@
  			pcm-lane-config = <1>;
  		};
  	};
@@ -130,6 +130,12 @@ index 7b5eb19dc..fcf761fb3 100644
 +		};
 +	};
 +
++};
++
++&regulator {
++	gcc_emac1_gdsc: gcc_emac1_gdsc {
++		regulator-name = "gcc_emac1_gdsc";
++	};
  };
  
  / {

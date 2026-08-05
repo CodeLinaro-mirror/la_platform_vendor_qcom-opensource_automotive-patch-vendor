@@ -1,7 +1,7 @@
 From 4aed5f54d99f217eef46bec223c2bfddce760f78 Mon Sep 17 00:00:00 2001
 From: Venkata Manikumar P <vpunyama@qti.qualcomm.com>
 Date: Mon, 23 Mar 2026 14:55:45 +0530
-Subject: [PATCH 09/11] smuelee changes for qup & uart2
+Subject: [PATCH 09/11] changes for qup & uart2
 
 Change-Id: I9eec6b49d2bd9867a5b3904af4387f88cdf4fc42
 Signed-off-by: Samuel Lee <samuelee@qti.qualcomm.com>
