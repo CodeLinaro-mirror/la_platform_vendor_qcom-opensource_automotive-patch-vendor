@@ -1,0 +1,101 @@
+From a2d005ad8aad950be01717bac5148cf38bc80d59 Mon Sep 17 00:00:00 2001
+From: Venkata Manikumar P <vpunyama@qti.qualcomm.com>
+Date: Mon, 23 Mar 2026 14:56:54 +0530
+Subject: [PATCH] changes mount failures &
+ bootup fix
+
+Change-Id: I091233405ce1f51fcd97ce692b79bd11f338915a
+Signed-off-by: Samuel Lee <samuelee@qti.qualcomm.com>
+---
+ qcom/lemans-vm-la-mt.dtsi | 24 +++++++++++++++++++++---
+ qcom/lemans-vm-la.dtsi    | 13 +++++++++++--
+ 2 files changed, 32 insertions(+), 5 deletions(-)
+
+diff --git a/qcom/lemans-vm-la-mt.dtsi b/qcom/lemans-vm-la-mt.dtsi
+index 1993e63ec..046effb2c 100644
+--- a/qcom/lemans-vm-la-mt.dtsi
++++ b/qcom/lemans-vm-la-mt.dtsi
+@@ -203,7 +203,7 @@
+ / {
+ 	chosen {
+ 		bootargs = "rcupdate.rcu_expedited=1 rcu_nocbs=0-7 cgroup.memory=nokmem,nosocket kpti=0 ufshcd-core.use_mcq_mode=n arm64.nopauth kasan=off msm_show_resume_irq.debug_mask=1";
+-		bootconfig = "androidboot.usbcontroller=a600000.dwc3 androidboot.fstab_suffix=gen4.qcom androidboot.dtbo_idx=2";
++		bootconfig = "androidboot.fstab_suffix=gen4.qcom androidboot.dtbo_idx=2";
+ 	};
+ 
+ 	rename_devices: rename_devices {
+@@ -216,14 +216,32 @@
+ 					"vdj", "vdk", "vdl",
+ 					"vdm", "vdn", "vdo",
+ 					"vdp", "vdq", "vdr",
+-					"vds", "vdt", "vdu";
++					"vds", "vdt", "vdu",
++					"vdv", "vdw", "vdx",
++					"vdy", "vdz", "vdaa",
++					"vdab", "vdac", "vdad",
++					"vdae", "vdaf", "vdag",
++					"vdah", "vdai", "vdaj",
++					"vdak", "vdal", "vdam",
++					"vdan", "vdao", "vdap",
++					"vdaq", "vdar", "vdas",
++					"vdat", "vdau";
+ 			rename-dev = "super", "userdata", "metadata",
+ 					"persist", "modem_a","bluetooth_a",
+ 					"misc", "vbmeta_a", "vbmeta_b",
+ 					"boot_a", "dtbo_a", "dsp_a",
+ 					"modem_b", "bluetooth_b", "boot_b",
+ 					"dtbo_b", "dsp_b", "vendor_boot_b",
+-					"vendor_boot_a", "init_boot_b", "init_boot_a";
++					"vendor_boot_a", "init_boot_b", "init_boot_a",
++					"persist-alliance", "oemfactorystate", "diagnostic",
++					"tier1_diagnostic", "confptid", "oem_a",
++					"oem_b", "oem_map", "oem0",
++					"oem1", "earlydata", "confptstatic",
++					"fvm_confraw", "confcal_1", "persistent-logging",
++					"factory", "ehorizon", "update",
++					"vvmtruststore", "confcal_0","confraw",
++					"oem_ext_a","oem_ext_b","rbvm_oem0",
++					"rbvm_oem1", "qnx_confptstatic";
+ 		};
+ 	};
+ };
+diff --git a/qcom/lemans-vm-la.dtsi b/qcom/lemans-vm-la.dtsi
+index 84b142005..ae5e00d6e 100644
+--- a/qcom/lemans-vm-la.dtsi
++++ b/qcom/lemans-vm-la.dtsi
+@@ -93,7 +93,7 @@
+ 
+ / {
+ 	chosen {
+-		bootargs = "rcupdate.rcu_expedited=1 rcu_nocbs=0-7 cgroup.memory=nokmem,nosocket kpti=0 ufshcd-core.use_mcq_mode=n qcom_dma_heaps.enable_bitstream_contig_heap=y arm64.nopauth kasan=off msm_show_resume_irq.debug_mask=1 ";
++		bootargs = "rcupdate.rcu_expedited=1 rcu_nocbs=0-7 cgroup.memory=nokmem,nosocket kpti=0 ufshcd-core.use_mcq_mode=n qcom_dma_heaps.enable_bitstream_contig_heap=y arm64.nopauth kasan=off msm_show_resume_irq.debug_mask=1 fw_devlink.strict=1";
+ 		bootconfig = "androidboot.usbcontroller=a600000.dwc3 androidboot.fstab_suffix=gen4.qcom androidboot.dtbo_idx=3";
+ 	};
+ 
+@@ -101,13 +101,22 @@
+ 		compatible = "qcom,rename-devices";
+ 		rename_blk: rename_blk {
+ 			device-type = "block";
++			actual-dev = "vda", "vdb", "vdc",
++					"vdd", "vde", "vdf",
++					"vdg", "vdh", "vdi",
++					"vdj", "vdk", "vdl",
++					"vdm", "vdn", "vdo",
++					"vdp", "vdq", "vdr",
++					"vds", "vdt", "vdu",
++					"vdv";
+ 			rename-dev = "super", "userdata", "metadata",
+ 					"persist", "modem_a","bluetooth_a",
+ 					"misc", "vbmeta_a", "vbmeta_b",
+ 					"boot_a", "dtbo_a", "dsp_a",
+ 					"modem_b", "bluetooth_b", "boot_b",
+ 					"dtbo_b", "dsp_b", "vendor_boot_b",
+-					"vendor_boot_a", "init_boot_b", "init_boot_a";
++					"vendor_boot_a", "init_boot_b", "init_boot_a",
++					"swap";
+ 		};
+ 	};
+ };
+-- 
+2.34.1
+
