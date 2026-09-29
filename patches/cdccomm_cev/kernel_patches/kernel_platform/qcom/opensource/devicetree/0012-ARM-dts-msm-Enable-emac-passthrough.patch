@@ -1,0 +1,53 @@
+From 3df48caf951e8f3465be96f049a04672349c7071 Mon Sep 17 00:00:00 2001
+From: Sarosh Hasan <sarohasa@qti.qualcomm.com>
+Date: Fri, 10 Jul 2026 10:23:25 +0530
+Subject: [PATCH] ARM: dts: msm: Enable emac passthrough
+
+Update eth driver device tree:
+Update lemans-vm-ethernet.dtsi, which is used for emac1
+passthrough to LA GVM.
+
+Change-Id: I847cd88e63fbfefcc1dbdb316beb8449cf51cd64
+Signed-off-by: Sarosh Hasan <sarohasa@qti.qualcomm.com>
+---
+ qcom/lemans-vm-ethernet.dtsi | 10 ++++++----
+ 1 file changed, 6 insertions(+), 4 deletions(-)
+
+diff --git a/qcom/lemans-vm-ethernet.dtsi b/qcom/lemans-vm-ethernet.dtsi
+index 101406be5..233ee84bc 100644
+--- a/qcom/lemans-vm-ethernet.dtsi
++++ b/qcom/lemans-vm-ethernet.dtsi
+@@ -106,7 +106,7 @@
+
+ 		phys = <&serdes1>;
+ 		phy-names = "serdes";
+-		phy-mode = "2500base-x";
++		phy-mode = "sgmii";
+ 		iommus = <&apps_smmu 0x140 0xf>;
+ 		qcom,iommu-dma = "bypass";
+ 		dma-coherent;
+@@ -123,8 +123,10 @@
+ 		snps,tso;
+ 		virtio-mdio;
+ 		snps,pbl = <32>;
+-		rx-fifo-depth = <16384>;
+-		tx-fifo-depth = <16384>;
++		mac-address = [AA BB CC DD 00 02];
++		disable_pcs_ane;
++		rx-fifo-depth = <32768>;
++		tx-fifo-depth = <32768>;
+ 		status = "disabled";
+
+ 		mdio: mdio {
+@@ -135,7 +137,7 @@
+
+ 		fixed-link {
+ 			status = "disabled";
+-			speed = <2500>;
++			speed = <1000>;
+ 			full-duplex;
+ 		};
+ 	};
+-- 
+2.34.1
+

@@ -1,0 +1,48 @@
+From 9bd9c45c0fbcf515f3ea9cec2aba4d49b501ec30 Mon Sep 17 00:00:00 2001
+From: Samuel Lee <samuelee@qti.qualcomm.com>
+Date: Thu, 27 Jun 2024 17:25:47 +0900
+Subject: [PATCH 07/11] qups: dts: change 2w-uart domain for RN CDC
+
+for RN_CDC,
+Change QUP0_SE4 2w-uart to comm with MCU domain from LAGVM (FVM) to QNX.
+
+Change-Id: If8baa29960287cb24e0071796db5923ecbb0775e
+Signed-off-by: Samuel Lee <samuelee@qti.qualcomm.com>
+---
+ qcom/lemans-vm-la-mt.dtsi | 4 ----
+ qcom/lemans-vm-la.dtsi    | 4 ----
+ 2 files changed, 8 deletions(-)
+
+diff --git a/qcom/lemans-vm-la-mt.dtsi b/qcom/lemans-vm-la-mt.dtsi
+index cd0cf3a7d..7b5eb19dc 100644
+--- a/qcom/lemans-vm-la-mt.dtsi
++++ b/qcom/lemans-vm-la-mt.dtsi
+@@ -179,10 +179,6 @@
+        status = "ok";
+ };
+ 
+-&qupv3_se4_2uart {
+-       status = "ok";
+-};
+-
+ &qupv3_se7_i2c {
+        status = "ok";
+ };
+diff --git a/qcom/lemans-vm-la.dtsi b/qcom/lemans-vm-la.dtsi
+index f6e6add05..6726612e5 100644
+--- a/qcom/lemans-vm-la.dtsi
++++ b/qcom/lemans-vm-la.dtsi
+@@ -192,10 +192,6 @@
+ 	status = "ok";
+ };
+ 
+-&qupv3_se4_2uart {
+-	status = "ok";
+-};
+-
+ &qupv3_se7_i2c {
+ 	status = "ok";
+ };
+-- 
+2.34.1
+
