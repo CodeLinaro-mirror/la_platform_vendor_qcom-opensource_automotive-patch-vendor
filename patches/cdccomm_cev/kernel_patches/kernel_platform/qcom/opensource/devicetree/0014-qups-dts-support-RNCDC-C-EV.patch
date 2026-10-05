@@ -1,0 +1,50 @@
+From e0c3f7d5ce9898f40472b48acdc3e8f84c4cda32 Mon Sep 17 00:00:00 2001
+From: Samuel Lee <samuelee@qti.qualcomm.com>
+Date: Tue, 9 Jun 2026 16:00:51 +0900
+Subject: [PATCH] qups: dts: support RNCDC C-EV
+
+qup configurations to support RNCDC C-EV H/W
+
+Change-Id: I97a2f95eca6a36fa28e79ba2eab8521b0b056469
+Signed-off-by: Samuel Lee <samuelee@qti.qualcomm.com>
+---
+ qcom/lemans-vm-la-mt.dtsi | 16 ----------------
+ 1 file changed, 16 deletions(-)
+
+diff --git a/qcom/lemans-vm-la-mt.dtsi b/qcom/lemans-vm-la-mt.dtsi
+index 9287d7bcd..46a82b5d1 100644
+--- a/qcom/lemans-vm-la-mt.dtsi
++++ b/qcom/lemans-vm-la-mt.dtsi
+@@ -328,18 +328,6 @@
+        status = "ok";
+ };
+ 
+-&qupv3_se9_2uart {
+-       status = "ok";
+-};
+-
+-&qupv3_se12_2uart {
+-       status = "ok";
+-};
+-
+-&qupv3_se13_2uart {
+-       status = "ok";
+-};
+-
+ &qupv3_se14_i2c {
+        status = "ok";
+ };
+@@ -348,10 +336,6 @@
+        status = "ok";
+ };
+ 
+-&qupv3_se19_i2c {
+-       status = "ok";
+-};
+-
+ &ufs2phy_mem {
+ 	status = "ok";
+ };
+-- 
+2.34.1
+
