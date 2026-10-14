@@ -1,0 +1,34 @@
+From 037ce227f847061a6f781025870b2997121fa941 Mon Sep 17 00:00:00 2001
+From: Parthiban Vijayasekaran <vijayase@qti.qualcomm.com>
+Date: Thu, 19 Feb 2026 10:07:15 +0530
+Subject: [PATCH 1/1]  Gen4_gvm_cdccomm and cdcsdv target compilation fix
+
+Change-Id: I854798753d23a978271212d3b1799ed9400c12e2
+---
+ android/prepare_vendor.sh | 8 ++------
+ 1 file changed, 2 insertions(+), 6 deletions(-)
+
+diff --git a/android/prepare_vendor.sh b/android/prepare_vendor.sh
+index a9e22209..58ae098a 100755
+--- a/android/prepare_vendor.sh
++++ b/android/prepare_vendor.sh
+@@ -173,14 +173,10 @@ fi
+ # Determine output folder
+ # ANDROID_KP_OUT_DIR is the output directory from Android Build System perspective
+ ANDROID_KP_OUT_DIR="${3:-${OUT_DIR}}"
++
+ if [ -z "${ANDROID_KP_OUT_DIR}" ]; then
+   ANDROID_KP_OUT_DIR="out/msm-kernel-${KERNEL_TARGET}-${KERNEL_VARIANT}"
+-
+-  if [ -n "${ANDROID_BUILD_TOP}" -a -e "${ANDROID_BUILD_TOP}/${ANDROID_KP_OUT_DIR}" ] ; then
+-    ANDROID_KP_OUT_DIR="${ANDROID_BUILD_TOP}/${ANDROID_KP_OUT_DIR}"
+-  else
+-    ANDROID_KP_OUT_DIR="${ROOT_DIR}/${ANDROID_KP_OUT_DIR}"
+-  fi
++  ANDROID_KP_OUT_DIR="${ROOT_DIR}/${ANDROID_KP_OUT_DIR}"
+ fi
+ 
+ # Clean up temporary KP output directory
+-- 
+2.34.1
+

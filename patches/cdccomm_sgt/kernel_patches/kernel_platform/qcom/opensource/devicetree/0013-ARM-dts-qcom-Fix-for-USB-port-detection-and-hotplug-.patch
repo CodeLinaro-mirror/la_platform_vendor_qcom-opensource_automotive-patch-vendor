@@ -1,0 +1,70 @@
+From a3de54b793072dbd54f5e322a5b2a4001c72cf08 Mon Sep 17 00:00:00 2001
+From: Rahul Parmar <rahuparm@qti.qualcomm.com>
+Date: Thu, 13 Aug 2026 02:56:01 -0700
+Subject: [PATCH 1/1] ARM: dts: qcom: Fix for USB port detection and hotplug
+ issues on BDV sample
+
+USB hotplug functionality was failing on the BDV sample.
+This change updates DTS to correct the USB port config,
+ensuring proper detection and hotplug operation.
+
+Change-Id: I4cc8bdaa2b7c5b5b660e8214f1670a605d2cf2ac
+Signed-off-by: Rahul Parmar <rahuparm@qti.qualcomm.com>
+---
+ qcom/lemans-vm-usb.dtsi | 10 ++++------
+ 1 file changed, 4 insertions(+), 6 deletions(-)
+
+diff --git a/qcom/lemans-vm-usb.dtsi b/qcom/lemans-vm-usb.dtsi
+index b6cfb4882..0a926f478 100644
+--- a/qcom/lemans-vm-usb.dtsi
++++ b/qcom/lemans-vm-usb.dtsi
+@@ -7,7 +7,7 @@
+ #include <dt-bindings/clock/qcom,gcc-lemans.h>
+ 
+ &soc {
+-	usb0: ssusb@a600000 {
++	usb0: hsusb@a600000 {
+ 		compatible = "qcom,dwc-usb3-msm";
+ 		reg = <0xa600000 0x200000>;
+ 		reg-names = "core_base";
+@@ -18,10 +18,9 @@
+ 
+ 		interrupts-extended = <&pdc 14 IRQ_TYPE_EDGE_RISING>,
+ 				<&intc GIC_SPI 287 IRQ_TYPE_LEVEL_HIGH>,
+-				<&pdc 12 IRQ_TYPE_LEVEL_HIGH>,
+ 				<&pdc 15 IRQ_TYPE_EDGE_RISING>;
+ 		interrupt-names = "dp_hs_phy_irq", "pwr_event_irq",
+-				"ss_phy_irq", "dm_hs_phy_irq";
++				 "dm_hs_phy_irq";
+ 		qcom,use-pdc-interrupts;
+ 
+ 
+@@ -43,7 +42,6 @@
+ 		qcom,pm-qos-latency = <2>;
+ 
+ 		qcom,host-poweroff-in-pm-suspend;
+-		qcom,disable-host-ssphy-powerdown;
+ 		status = "disabled";
+ 
+ 		/*
+@@ -60,7 +58,7 @@
+ 			memory-region = <&dwc3_mem_region>;
+ 			dma-coherent;
+ 			interrupts = <GIC_SPI 292 IRQ_TYPE_LEVEL_HIGH>;
+-			usb-phy = <&usb2_phy0>, <&usb_qmp_phy0>;
++			usb-phy = <&usb2_phy0>, <&usb_nop_phy>;
+ 			snps,disable-clk-gating;
+ 			snps,has-lpm-erratum;
+ 			snps,hird-threshold = /bits/ 8 <0x0>;
+@@ -70,7 +68,7 @@
+ 			snps,dis-u2-entry-quirk;
+ 			snps,ssp-u3-u0-quirk;
+ 			tx-fifo-resize;
+-			maximum-speed = "super-speed-plus";
++			maximum-speed = "high-speed";
+ 			dr_mode = "otg";
+ 			usb-role-switch;
+ 		};
+-- 
+2.34.1
+

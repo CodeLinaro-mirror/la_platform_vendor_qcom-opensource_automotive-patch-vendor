@@ -1,0 +1,67 @@
+From cefe3b17d82a14f776f1127a8ef6b48351822944 Mon Sep 17 00:00:00 2001
+From: Samuel Lee <samuelee@qti.qualcomm.com>
+Date: Wed, 13 Mar 2024 16:38:03 +0900
+Subject: [PATCH 02/11] qups: dts: Configure QUPs suuport for lemans HQX SPs
+
+propagate LAGVM_mt QUP configurations for lemans HQX based SPs.
+
+Change-Id: I7d3fbe0c3e13772d947cfbe73dbd7e4474cf301b
+Signed-off-by: Samuel Lee <samuelee@qti.qualcomm.com>
+---
+ qcom/lemans-vm-la-mt.dtsi | 40 +++++++++++++++++++++++++++++++++++++++
+ 1 file changed, 40 insertions(+)
+
+diff --git a/qcom/lemans-vm-la-mt.dtsi b/qcom/lemans-vm-la-mt.dtsi
+index 91293bb3b..f0d9c8084 100644
+--- a/qcom/lemans-vm-la-mt.dtsi
++++ b/qcom/lemans-vm-la-mt.dtsi
+@@ -171,6 +171,46 @@
+ 	status = "ok";
+ };
+ 
++&qupv3_se0_i2c {
++       status = "ok";
++};
++
++&qupv3_se3_spi {
++       status = "ok";
++};
++
++&qupv3_se4_2uart {
++       status = "ok";
++};
++
++&qupv3_se7_i2c {
++       status = "ok";
++};
++
++&qupv3_se8_i2c {
++       status = "ok";
++};
++
++&qupv3_se9_2uart {
++       status = "ok";
++};
++
++&qupv3_se12_2uart {
++       status = "ok";
++};
++
++&qupv3_se13_2uart {
++       status = "ok";
++};
++
++&qupv3_se15_i2c {
++       status = "ok";
++};
++
++&qupv3_se19_i2c {
++       status = "ok";
++};
++
+ &ufs2phy_mem {
+ 	status = "ok";
+ };
+-- 
+2.34.1
+
